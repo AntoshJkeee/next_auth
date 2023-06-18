@@ -1,6 +1,6 @@
-# Lint-утилиты для современного Next приложения 
+## Lint-утилиты для современного Next приложения 
 
-## Корректно работает на Next 13.4
+#### Корректно работает на Next 13.4. После того как вы развренули проект с помощью `npx create-next-app@13.4 name_project`
 
 1. Установка  **Prettier**
     - Создаем файл `.prettierrc` в корне проекта
@@ -203,4 +203,150 @@
     - `npm install stylelint-config-standard@21.0.0 -D`
     - `npm install stylelint-order@4.1.0 -D`
     - `npm install stylelint-order-config-standard@0.1.3 -D`
+    - В IDE устанавливаем плагин StyleLint и проверяем чтоб он считывался с node_modules/stylelint вашего проекта
+ 
+ 6. Обновляем `package.json` файл для прекоммитного линтинга
+    - Добавляем в ключ **scripts** следующие команды
+            
+      ```
+      "scripts": {
+        ...
+        "stylelint": "stylelint \"**/*.scss\" --fix",
+        "install": "npx husky install"
+      }
+      ```
+    - Добавляем в конец `package.json` следующие конструкции
+            
+      ```
+         "config": {
+            "commitizen": {
+              "path": "node_modules/cz-customizable"
+            },
+            "cz-customizable": {
+              "config": "./commitizen.js"
+            }
+          },
+         "lint-staged": {
+            "*.scss": [
+              "stylelint --fix"
+            ],
+            "*.{js,ts,tsx,jsx}": [
+              "prettier --write",
+              "node_modules/.bin/eslint --max-warnings=0"
+            ]
+          }
+      ```
+     - Устанавливаем следующие пакеты `npm install lint-staged@13.0.3 commitizen@4.2.4 cz-customizable@6.3.0 @commitlint/cli@17.0.1 @commitlint/config-conventional@17.1.0`
+     - Устанавливаем один раз `npx install husky`
+     - Добавляем в корень проекта файл `commitizen.js` со следующей настройкой
+
+            
+      ```
+        'use strict';
+        module.exports = {
+            types: [
+                {
+                    value: 'feat',
+                    name: 'feat:      Новый функционал',
+                },
+                {
+                    value: 'refactor',
+                    name: 'refactor:      Рефакторинг',
+                },
+                {
+                    value: 'fix',
+                    name: 'fix:       Исправление',
+                },
+                {
+                    value: 'merge',
+                    name: 'merge       Слияние веток',
+                },
+                {
+                    value: 'hotfix',
+                    name: 'hotfix:      Горячее исправление',
+                },
+                {
+                    value: 'build',
+                    name: 'build:       Изменение внешних зависимостей',
+                },
+                {
+                    value: 'docs',
+                    name: 'docs:       Обновление документации',
+                },
+                {
+                    value: 'revert',
+                    name: 'revert:       Откат к предыдущему коммиту',
+                },
+                {
+                    value: 'test',
+                    name: 'test:       Написание теста в jest и storybook',
+                },
+            ],
+            messages: {
+                type: 'Какие изменения вы вносите?',
+                customScope: 'Пропишите область проекта, которую вы изменили (обязательно и на англ):',
+                subject: 'Напишите КОРОТКИЙ заголовок, описывающий коммит: ',
+                footer: 'Укажите номер таска из ActiveCollab. Например: Task-29027-130, Task-32997-340',
+                body: 'Полное описание проделанной работы с указанием файла, который изменил',
+                confirmCommit: 'Вас устраивает получившийся коммит?',
+            },
+            allowCustomScopes: true,
+            allowBreakingChanges: false,
+            footerPrefix: 'METADATA:',
+            subjectLimit: 72,
+        };
+      ```
+     - Добавляем в корень проекта файл `commitlint.config.js` со следующей настройкой
+
+      ```
+        module.exports = {
+            extends: ['@commitlint/config-conventional'],
+            rules: {
+                'type-enum': [
+                    2,
+                    'always',
+                    ['hotfix', 'build', 'chore', 'ci', 'docs', 'feat', 'fix', 'merge', 'perf', 'refactor', 'revert', 'style', 'test'],
+                ],
+            },
+        };
+     ```
+      
+     - После того как был установлен **husky**, в корне проекта создается папка `.husky`. В нее необходимо добавить три следующие файла. Важно чтобы они были без какого либо расширения
+     - Добавляем файл `commit-msg`
+         
+         
+      ```
+        #!/bin/sh
+        . "$(dirname "$0")/_/husky.sh"
+
+        npx --no -- commitlint --edit "$1"
+     ```
+      
+      - Добавляем файл `pre-commit`
+      
+
+      ```
+        #!/bin/sh
+        . "$(dirname "$0")/_/husky.sh"
+
+        npx lint-staged
+     ```
+      
+      - Добавляем файл `prepare-commit-msg`
+            
+
+      ```
+       #!/bin/sh
+        . "$(dirname "$0")/_/husky.sh"
+
+        exec < /dev/tty && npx cz --hook || true
+     ```
      
+#### Таким образом в проект установлены следующие технологии
+- **NextJs**
+- **TypeScipt**
+- **Eslint**
+- **StyleLint**
+- **Prettier**
+- **Husky**
+- **Lint staged**
