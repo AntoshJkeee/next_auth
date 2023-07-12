@@ -81,7 +81,7 @@
         ```
       
 3. Установка  **TypeScript**
-    - Уставнавливаем TypeScript `npm insall typescript -D`
+    - Уставнавливаем TypeScript `npm install typescript -D`
     - Создаем файл `.tsconfig.json` в корне проекта
     - Добавляем в файл следующую конфигурацию
        
