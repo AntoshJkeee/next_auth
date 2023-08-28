@@ -58,7 +58,7 @@
       
      - Устанавливаем следующие пакеты `npm install eslint@7.32.0 @typescript-eslint/parser@5.30.6 @typescript-eslint/eslint-plugin@5.30.6 -D`
      - В IDE устанавливаем плагин **Eslint** и проверяем чтоб он считывался с node_modules/eslint вашего проекта
-2. Подключение  **EditorConfig**
+3. Подключение  **EditorConfig**
      - Создаем файл `.editorconfig` в корне проекта
      - Добавляем в файл следующую конфигурацию 
 
@@ -80,7 +80,7 @@
         max_line_length = 120
         ```
       
-3. Установка  **TypeScript**
+4. Установка  **TypeScript**
     - Уставнавливаем TypeScript `npm install typescript -D`
     - Создаем файл `.tsconfig.json` в корне проекта
     - Добавляем в файл следующую конфигурацию
@@ -127,7 +127,7 @@
     - Создаем файл `.tsconfig.json` в корне проекта   
     - В IDE устанавливаем плагин **TypeScript** и проверяем чтоб он считывался с node_modules/typescript вашего проекта
    
-4. Подключаем **.gitignore** файл
+5. Подключаем **.gitignore** файл
     - Создаем файл `.gitignore` в корне проекта
     - Добавляем в файл следующую конфигурацию 
     
@@ -172,7 +172,7 @@
       Thumbs.db
       ```
       
- 5. Установка  **StyleLint**
+ 6. Установка  **StyleLint**
     - Создаем файл `.stylelintrc.json` в корне проекта
     - Добавляем в файл следующую конфигурацию
         
@@ -204,8 +204,11 @@
     - `npm install stylelint-order@4.1.0 -D`
     - `npm install stylelint-order-config-standard@0.1.3 -D`
     - В IDE устанавливаем плагин StyleLint и проверяем чтоб он считывался с node_modules/stylelint вашего проекта
+   
+ 7.  Установка **sass**
+    - Делаем `npm i sass`
  
- 6. Обновляем `package.json` файл для прекоммитного линтинга
+ 8. Обновляем `package.json` файл для прекоммитного линтинга
     - Добавляем в ключ **scripts** следующие команды
             
       ```
