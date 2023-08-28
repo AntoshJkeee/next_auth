@@ -242,6 +242,7 @@
      - Устанавливаем следующие пакеты `npm install lint-staged@13.0.3 commitizen@4.2.4 cz-customizable@6.3.0 @commitlint/cli@17.0.1 @commitlint/config-conventional@17.1.0`
      - Устанавливаем один раз `npx install husky`
      - Добавляем в корень проекта файл `commitizen.js` со следующей настройкой
+     - Если будет проблема с правами чтоения следующих файлов, в консоль следует прописать `chmod ug+x .husky/*`
 
             
       ```
